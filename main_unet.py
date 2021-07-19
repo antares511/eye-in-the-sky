@@ -293,19 +293,19 @@ for fname in filelist_trainx:
     xtrain_list.append(image)
 
 x_train = np.asarray(xtrain_list)
-tif = TIFF.open('Inter-IIT-CSRE/The-Eye-in-the-Sky-dataset/sat/14.tif')
-image = tif.read_image()
-crop_size = 128
+# tif = TIFF.open('Inter-IIT-CSRE/The-Eye-in-the-Sky-dataset/sat/14.tif')
+# image = tif.read_image()
+# crop_size = 128
     
-stride = 64
-h, w, c = image.shape
+# stride = 64
+# h, w, c = image.shape
     
-n_h = int(int(h/stride))
-n_w = int(int(w/stride))
+# n_h = int(int(h/stride))
+# n_w = int(int(w/stride))
     
     
-image = padding(image, w, h, c, crop_size, stride, n_h, n_w)
-x_train = image
+# image = padding(image, w, h, c, crop_size, stride, n_h, n_w)
+# x_train = image
 # Making array of all the training gt images as it is without any cropping
 
 ytrain_list = []
@@ -333,20 +333,20 @@ for fname in filelist_trainy:
 y_train = np.asarray(ytrain_list)
 
 
-tif = TIFF.open('Inter-IIT-CSRE/The-Eye-in-the-Sky-dataset/gt/14.tif')
-image = tif.read_image()
-crop_size = 128
+# tif = TIFF.open('Inter-IIT-CSRE/The-Eye-in-the-Sky-dataset/gt/14.tif')
+# image = tif.read_image()
+# crop_size = 128
     
-stride = 64
+# stride = 64
     
-h, w, c = image.shape
+# h, w, c = image.shape
     
-n_h = int(int(h/stride))
-n_w = int(int(w/stride))
+# n_h = int(int(h/stride))
+# n_w = int(int(w/stride))
     
     
-image = padding(image, w, h, c, crop_size, stride, n_h, n_w)
-y_train = image
+# image = padding(image, w, h, c, crop_size, stride, n_h, n_w)
+# y_train = image
 
 def unet(shape = (None,None,4)):
     
