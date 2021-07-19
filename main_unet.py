@@ -63,7 +63,7 @@ filelist_trainx = sorted(glob.glob('Inter-IIT-CSRE/The-Eye-in-the-Sky-dataset/sa
 filelist_trainy = sorted(glob.glob('Inter-IIT-CSRE/The-Eye-in-the-Sky-dataset/gt/*.tif'), key=numericalSort)
 
 # List of file names of actual Satellite images for testing 
-filelist_testx = sorted(glob.glob('Inter-IIT-CSRE/The-Eye-in-the-Sky-test-data/sat_test/*.tif'), key=numericalSort)
+#filelist_testx = sorted(glob.glob('Inter-IIT-CSRE/The-Eye-in-the-Sky-test-data/sat_test/*.tif'), key=numericalSort)
                                         
 
 
@@ -200,7 +200,7 @@ def new_crops(img, crop_size = 512):
 # Reading, padding, cropping and making array of all the cropped images of all the trainig sat images
 trainx_list = []
 
-for fname in filelist_trainx[:13]:
+for fname in filelist_trainx[:4]:
     
     # Reading the image
     tif = TIFF.open(fname)
@@ -218,7 +218,7 @@ trainx = np.asarray(trainx_list)
 # Reading, padding, cropping and making array of all the cropped images of all the trainig gt images
 trainy_list = []
 
-for fname in filelist_trainy[:13]:
+for fname in filelist_trainy[:4]:
     
     # Reading the image
     tif = TIFF.open(fname)
@@ -239,7 +239,7 @@ testx_list = []
 #for fname in filelist_trainx[13]:
     
     # Reading the image
-tif = TIFF.open(filelist_trainx[13])
+tif = TIFF.open(filelist_trainx[4])
 image = tif.read_image()
     
 # Padding as required and cropping
@@ -474,57 +474,6 @@ for i in range(testy.shape[0]):
     
 testy_hot = np.asarray(testy_hot)
 
-
-'''#trainx = trainx/np.max(trainx)
-trainy = trainy/np.max(trainy)
-
-#testx = testx/np.max(testx)
-testy = testy/np.max(testy)
-
-# Data Augmentation
-
-datagen_args = dict(rotation_range=45.,
-                         width_shift_range=0.1,
-                         height_shift_range=0.1,
-                         shear_range=0.2,
-                         zoom_range=0.2,
-                         horizontal_flip=True,
-                         vertical_flip=True,
-                         fill_mode='reflect')
-
-x_datagen = ImageDataGenerator(**datagen_args)
-y_datagen = ImageDataGenerator(**datagen_args)
-
-seed = 1
-batch_size = 16
-x_datagen.fit(trainx, augment=True, seed = seed)
-y_datagen.fit(trainy, augment=True, seed = seed)
-
-x_generator = x_datagen.flow(trainx, batch_size = 16, seed=seed)
-
-y_generator = y_datagen.flow(trainy, batch_size = 16, seed=seed)
-
-train_generator = zip(x_generator, y_generator)
-
-X_datagen_val = ImageDataGenerator()
-Y_datagen_val = ImageDataGenerator()
-X_datagen_val.fit(testx, augment=True, seed=seed)
-Y_datagen_val.fit(testy, augment=True, seed=seed)
-X_test_augmented = X_datagen_val.flow(testx, batch_size=batch_size, seed=seed)
-Y_test_augmented = Y_datagen_val.flow(testy, batch_size=batch_size, seed=seed)
-
-test_generator = zip(X_test_augmented, Y_test_augmented)
-
-model.fit_generator(train_generator, validation_data=test_generator, validation_steps=batch_size/2, epochs = 10, steps_per_epoch=len(x_generator))
-model.save("model_augment.h5")
-'''
-
-#trainx = trainx/np.max(trainx)
-#trainy = trainy/np.max(trainy)
-
-#testx = testx/np.max(testx)
-#testy = testy/np.max(testy)
-
 history = model.fit(trainx, trainy_hot, epochs=20, validation_data = (testx, testy_hot),batch_size=64, verbose=1)
 model.save("model_onehot.h5")
 
@@ -551,37 +500,3 @@ plt.legend(['train', 'val'], loc='upper right')
 plt.savefig('loss_plot.png')
 plt.show()
 plt.close()
-
-#epochs = 20
-#for e in range(epochs):
-#        print("epoch %d" % e)
-#        #for X_train, Y_train in zip(x_train, y_train): # these are chunks of ~10k pictures
-#        h,w,c = x_train.shape
-#        X_train = np.reshape(x_train,(1,h,w,c))
-#        h,w,c = y_train.shape
-#        Y_train = np.reshape(y_train,(1,h,w,c))
-#        model.fit(X_train, Y_train, batch_size=1, nb_epoch=1)
-	
-#        model.save("model_nocropping.h5")        
-#print(X_train.shape, Y_train.shape)
-
-
-#model.save("model_nocropping.h5")
-
-#epochs = 10
-#for e in range(epochs):
-#	print("epoch %d" % e)
-#	for X_train, Y_train in zip(x_train, y_train): # these are chunks of ~10k pictures
-#		h,w,c = X_train.shape
-#		X_train = np.reshape(X_train,(1,h,w,c))
-#		h,w,c = Y_train.shape
-#		Y_train = np.reshape(Y_train,(1,h,w,c))
-#		model.fit(X_train, Y_train, batch_size=1, nb_epoch=1)
-        #print(X_train.shape, Y_train.shape)
-
-
-#model.save("model_nocropping.h5")
-
-#accuracy = model.evaluate(x=x_test,y=y_test,batch_size=16)
-#print("Accuracy: ",accuracy[1])
-
