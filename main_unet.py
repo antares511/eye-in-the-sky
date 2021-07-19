@@ -257,7 +257,7 @@ testy_list = []
 #for fname in filelist_trainx[13]:
     
 # Reading the image
-tif = TIFF.open(filelist_trainy[13])
+tif = TIFF.open(filelist_trainy[4])
 image = tif.read_image()
     
 # Padding as required and cropping
@@ -426,14 +426,11 @@ model = unet()
 
 
 color_dict = {0: (0, 0, 0),
-              1: (0, 125, 0),
-              2: (150, 80, 0),
-              3: (255, 255, 0),
-              4: (100, 100, 100),
-              5: (0, 255, 0),
-              6: (0, 0, 150),
-              7: (150, 150, 255),
-              8: (255, 255, 255)}
+              1: (255, 0, 0),
+              2: (0, 255, 0),
+              3: (0, 255, 255),
+              4: (255, 255, 0),
+              5: (0, 0, 255)}
 
 def rgb_to_onehot(rgb_arr, color_dict):
     num_classes = len(color_dict)
